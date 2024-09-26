@@ -10,7 +10,7 @@ public class Login {
 	private String emailId;
 	private String username;
 	private String password;
-	private Role role;
+	//private Role role;
 	
 	
 	public Login(String emailId, String username, String password, Role role) {
@@ -18,7 +18,7 @@ public class Login {
 		this.emailId = emailId;
 		this.username = username;
 		this.password = password;
-		this.role = role;
+		//this.role = role;
 	}
 	
 	
@@ -45,17 +45,17 @@ public class Login {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Role getRole() {
-		return role;
-	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
-	@Override
-	public String toString() {
-		return "Login [emailId=" + emailId + ", username=" + username + ", password=" + password + ", role=" + role
-				+ "]";
-	}
+//	public Role getRole() {
+//		return role;
+//	}
+//	public void setRole(Role role) {
+//		this.role = role;
+//	}
+//	@Override
+//	public String toString() {
+//		return "Login [emailId=" + emailId + ", username=" + username + ", password=" + password + ", role=" + role
+//				+ "]";
+//	}
 	
 	
 
