@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 	
 	@RequestMapping(value = "",method = RequestMethod.GET)
-	public String openPage() {
-		System.out.println("index page open");
-		return "index";		// using view resolver it check page inside 
+	public String home() {
+		System.out.println("Open home page");
+		return "home";		// using view resolver it check page inside 
 							// template folder 
 	}
 

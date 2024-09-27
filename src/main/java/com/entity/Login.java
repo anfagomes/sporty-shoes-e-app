@@ -10,17 +10,16 @@ public class Login {
 	private String emailId;
 	private String username;
 	private String password;
-	//private Role role;
+	private Integer userTypeId;
 	
 	
-	public Login(String emailId, String username, String password, Role role) {
+	public Login(String emailId, String username, String password, Integer userTypeId) {
 		super();
 		this.emailId = emailId;
 		this.username = username;
 		this.password = password;
-		//this.role = role;
+		this.userTypeId = userTypeId;
 	}
-	
 	
 	public Login() {
 		super();
@@ -45,6 +44,30 @@ public class Login {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+
+
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	
+	
+
+
+//	public UserType getUserType() {
+//		return userType;
+//	}
+//
+//
+//	public void setUserType(UserType userType) {
+//		this.userType = userType;
+//	}
+	
+	
 //	public Role getRole() {
 //		return role;
 //	}
