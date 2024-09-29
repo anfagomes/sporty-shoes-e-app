@@ -18,24 +18,22 @@ public class HomeController {
 							// template folder 
 	}
 	
-	@RequestMapping(value = "signIn",method = RequestMethod.POST)
-	public String signIn(Login login, Model mm) {  
-		mm.addAttribute("login", login);		
-		String result = loginService.signIn(ll);
-		if(result.equals("user")) {
-			session.setAttribute("loggedInUser", ll);
-			return "redirect:/user";
-		}else {
-			if(result.equals("admin")) {
-				session.setAttribute("loggedInUser", ll);
-				return "redirect:/admin";
-			}else {
-				return "redirect:/login?error";
-			}
-		}
-	}
+//	@RequestMapping(value = "signIn",method = RequestMethod.POST)
+//	public String signIn(Login login, Model mm) {  
+//		mm.addAttribute("login", login);		
+//		String result = loginService.signIn(ll);
+//		if(result.equals("user")) {
+//			session.setAttribute("loggedInUser", ll);
+//			return "redirect:/user";
+//		}else {
+//			if(result.equals("admin")) {
+//				session.setAttribute("loggedInUser", ll);
+//				return "redirect:/admin";
+//			}else {
+//				return "redirect:/login?error";
+//			}
+//		}
+//	}
 	
-
-	}
 
 }

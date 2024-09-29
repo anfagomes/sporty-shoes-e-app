@@ -29,7 +29,7 @@ public class ProductService {
         	product = result.get();
         }
         else {
-            // we didn't find the employee
+            // we didn't find the product
             throw new RuntimeException("Did not find product id - " + productId);
         }
 
