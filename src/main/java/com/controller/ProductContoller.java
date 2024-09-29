@@ -25,11 +25,22 @@ public class ProductContoller {
 	@RequestMapping(value = "list",method = RequestMethod.GET)
 	public String listProducts(Model model) {
 		//get products from db
-		List<Product> products = productService.findAll();
-		System.out.println("Product: "+ products);
+		List<Product> getProducts = productService.findAll();
+		System.out.println("Product: "+ getProducts);
 		//add to the spring model
-		model.addAttribute("products",products);
+		model.addAttribute("products",getProducts);
 		return "listproducts";
+		
+	}
+	
+	// Add mapping for list - get all products
+	@RequestMapping(value = "addProductForm",method = RequestMethod.GET)
+	public String addProductForm(Model model) {
+		Product product = new Product();
+		
+		//add to the spring model
+		model.addAttribute("product",product);
+		return "addproduct";
 		
 	}
 	

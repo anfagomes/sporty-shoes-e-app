@@ -9,29 +9,34 @@
 <body>
 <div class="container">
 
+<h2>Sporty Shoes</h2>
+<br>
 <h3>Product Management</h3>
 <hr>
+<a th:href="@{addproduct}" class="btn btn-primary btn-sm mb-3">Add Product</a>
 
 <table class="table table-bordered table-striped">
 	<thead class="table-dark">
 		<tr>
+			<th>Product Id</th>
 			<th>Name</th>
 			<th>Brand</th>
 			<th>Size</th>
 			<th>Quantity</th>
 			<th>Price</th>
+			<th>Actions</th>
 		</tr>
 	</thead>
 	
-	<span th:text="${products}" />
-	
 	<tbody>
 		<tr th:each="product : ${products}">
-			<td th: text="${product.name}" />
-			<td th: text="${product.brand}" />
-			<td th: text="${product.size}" />
-			<td th: text="${product.quantity}" />
-			<td th: text="${product.price}" />
+			<td th:text="${product.productid}" />
+			<td th:text="${product.name}" />
+			<td th:text="${product.brand}" />
+			<td th:text="${product.size}" />
+			<td th:text="${product.quantity}" />
+			<td th:text="${product.price}" />
+			<td></td>
 		</tr>		
 	</tbody>
 
