@@ -34,7 +34,7 @@ public class ProductContoller {
 	}
 	
 	// Add mapping for list - get all products
-	@RequestMapping(value = "addProductForm",method = RequestMethod.GET)
+	@RequestMapping(value = "addproduct",method = RequestMethod.GET)
 	public String addProductForm(Model model) {
 		Product product = new Product();
 		
