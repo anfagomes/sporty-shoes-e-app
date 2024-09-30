@@ -15,7 +15,6 @@ import com.entity.Product;
 import com.service.ProductService;
 
 @Controller
-@RequestMapping("products")
 public class ProductContoller {
 	
 	
@@ -24,7 +23,8 @@ public class ProductContoller {
 	
 	
 	// Add mapping for list - get all products
-	@RequestMapping(value = "",method = RequestMethod.GET)
+	//@RequestMapping(value = "",method = RequestMethod.GET)
+	@GetMapping("/products")
 	public String listProducts(Model model) {
 		//get products from db
 		List<Product> getProducts = productService.findAll();
@@ -36,7 +36,8 @@ public class ProductContoller {
 	}
 	
 	// Add new product form
-	@RequestMapping(value = "productFormAdd",method = RequestMethod.GET)
+	//@RequestMapping(value = "productFormAdd",method = RequestMethod.GET)
+	@GetMapping("/products/productFormAdd")
 	public String addProductForm(Model model) {
 
 		model.addAttribute("product",new Product());
@@ -44,27 +45,29 @@ public class ProductContoller {
 		
 	}
 	
-	// Add new product form
+	// Form to update
 	
-	  @RequestMapping(value = "productFormUpdate",method = RequestMethod.GET)
-	  public String productFormUpdate(@RequestParam("productId") int productId, Model model) {
+	  //@RequestMapping(value = "productFormUpdate",method = RequestMethod.GET)
+	@GetMapping("/products/productFormUpdate")
+	public String productFormUpdate(@RequestParam("productId") int productId, Model model) {	  
+		Product product = productService.findById(productId);
+		model.addAttribute("product",product); 
 		  
-		  Product product = productService.findById(productId);
-		  model.addAttribute("product",product); 
-		  
-		  return "productform";
+		return "productform";
 	  }
 	  
-	  @RequestMapping(value = "delete",method = RequestMethod.GET)
-	  public String delete(@RequestParam("productId") int productId, Model model) { 
-		  productService.deleteById(productId);  
-		  return "redirect:/products";
-	  }
+	@GetMapping("/products/delete")
+	public String delete(@RequestParam("productId") int productId, Model model) { 
+		productService.deleteById(productId);  
+		return "redirect:/products";
+	}
 	 
 	
 	
 	// Save product in database
-	@RequestMapping(value = "save",method = RequestMethod.POST)
+	
+	//@RequestMapping(value = "save",method = RequestMethod.POST)
+	@GetMapping("/products/save")
 	public String saveProduct(@ModelAttribute("product") Product product) {
 		productService.save(product);
 		// redirect to avoid duplicates

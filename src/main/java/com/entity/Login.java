@@ -2,41 +2,33 @@ package com.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="login")
 public class Login {
 	
 	@Id
-	private String emailId;
-	private String username;
+	private String emailid;
 	private String password;
-	private Integer userTypeId;
+	private int userid;
 	
-	
-	public Login(String emailId, String username, String password, Integer userTypeId) {
+	public Login(String emailId, String password, int userid) {
 		super();
-		this.emailId = emailId;
-		this.username = username;
+		this.emailid = emailId;
 		this.password = password;
-		this.userTypeId = userTypeId;
+		this.userid = userid;
 	}
 	
 	public Login() {
 		super();
 	}
 
-
 	public String getEmailId() {
-		return emailId;
+		return emailid;
 	}
 	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
+		this.emailid = emailId;
 	}
 	public String getPassword() {
 		return password;
@@ -44,16 +36,14 @@ public class Login {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
-	public Integer getUserTypeId() {
-		return userTypeId;
+	public int getUserId() {
+		return userid;
 	}
-
-
-	public void setUserTypeId(Integer userTypeId) {
-		this.userTypeId = userTypeId;
+	public void setUserId(int userId) {
+		this.userid = userId;
 	}
+	
+	
 	
 	
 
