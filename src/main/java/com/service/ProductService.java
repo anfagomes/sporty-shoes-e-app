@@ -43,6 +43,12 @@ public class ProductService {
     public void deleteById(int productId) {
     	productRepository.deleteById(productId);
     }
+    
+    public List<Product> findAllByBrand(String brand) {
+    	return productRepository.findAllByBrand(brand);
+    	
+    	
+    }
 	
 
 }
