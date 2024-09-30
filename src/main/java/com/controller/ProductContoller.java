@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.entity.Product;
 import com.service.ProductService;
@@ -35,13 +36,31 @@ public class ProductContoller {
 	}
 	
 	// Add new product form
-	@RequestMapping(value = "addproduct",method = RequestMethod.GET)
+	@RequestMapping(value = "productFormAdd",method = RequestMethod.GET)
 	public String addProductForm(Model model) {
 
 		model.addAttribute("product",new Product());
-		return "addproduct";
+		return "productform";
 		
 	}
+	
+	// Add new product form
+	
+	  @RequestMapping(value = "productFormUpdate",method = RequestMethod.GET)
+	  public String productFormUpdate(@RequestParam("productId") int productId, Model model) {
+		  
+		  Product product = productService.findById(productId);
+		  model.addAttribute("product",product); 
+		  
+		  return "productform";
+	  }
+	  
+	  @RequestMapping(value = "delete",method = RequestMethod.GET)
+	  public String delete(@RequestParam("productId") int productId, Model model) { 
+		  productService.deleteById(productId);  
+		  return "redirect:/products";
+	  }
+	 
 	
 	
 	// Save product in database

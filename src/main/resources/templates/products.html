@@ -13,14 +13,15 @@
 <br>
 <h3>Product Management</h3>
 <hr>
-<a th:href="@{/products/addproduct}" class="btn btn-primary btn-sm mb-3">Add Product</a>
+<a th:href="@{/products/productFormAdd}" class="btn btn-primary btn-sm mb-3">Add Product</a>
 
 <table class="table table-bordered table-striped">
 	<thead class="table-dark">
 		<tr>
-			<th>Product Id</th>
+			<th>Shoe Id</th>
 			<th>Name</th>
 			<th>Brand</th>
+			<th>Type</th>
 			<th>Size</th>
 			<th>Quantity</th>
 			<th>Price (€)</th>
@@ -33,14 +34,19 @@
 			<td th:text="${product.productid}" />
 			<td th:text="${product.name}" />
 			<td th:text="${product.brand}" />
+			<td th:text="${product.type}" />
 			<td th:text="${product.size}" />
 			<td th:text="${product.quantity}" />
 			<td th:text="${product.price}" />
-			<td></td>
+			<td>
+				<a th:href="@{/products/productFormUpdate(productId=${product.productid})}" class="btn btn-info btn-sm">Update</a>
+				<a th:href="@{/products/delete(productId=${product.productid})}" class="btn btn-danger btn-sm">Delete</a>
+			</td>
 		</tr>		
 	</tbody>
 
 </table>
+<hr><a th:href="@{/}">Back to Admin Dashboard</a>
 </div>
 </body>
 </html>

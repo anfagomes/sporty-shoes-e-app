@@ -15,8 +15,10 @@
 
 <form action="#" th:action="@{/products/save}" th:object="${product}" method="POST">
 
+	<input type="hidden" th:field='*{productid}'>
 	<input type="text" th:field="*{name}" class="form-control mb-4 w-25" placeholder="Name">
 	<input type="text" th:field="*{brand}" class="form-control mb-4 w-25" placeholder="Brand">
+	<input type="text" th:field="*{type}" class="form-control mb-4 w-25" placeholder="Type">
 	<input type="text" th:field="*{size}" class="form-control mb-4 w-25" placeholder="Size">
 	<input type="number" th:field="*{quantity}" class="form-control mb-4 w-25" placeholder="Quantity">
 	<input type="text" th:field="*{price}" class="form-control mb-4 w-25" placeholder="Price" >

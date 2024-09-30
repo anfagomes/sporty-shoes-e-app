@@ -11,6 +11,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 
 @Entity
@@ -29,10 +31,10 @@ public class Product {
 	private String size;
 	private String type;
 	
-	@NotBlank(message = "Quantity cannot be empty.")
+	@PositiveOrZero
 	private int quantity;
 	
-	@NotBlank(message = "Price cannot be empty.")
+	@Min(value = 1,message = "Price value must be > 1")
 	private float price;
 	
 	@OneToMany
