@@ -1,11 +1,10 @@
 package com.entity;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,40 +12,36 @@ import jakarta.persistence.Table;
 public class UserAccount {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userid;
+	private String emailid;
+	private String password;
 	private String username;
 	private String status;
 	private String usertype;
-	
-	private String emailid;
-	
-	@OneToOne
-	@JoinColumn(name = "userid")
-	public int getUserid() {
-		return userid;
-	}
-	
 	
 	
 	public UserAccount() {
 		super();
 	}
 	
-	
-	public UserAccount(int userid, String username, String status, String usertype, String emailid) {
+	public UserAccount(String emailid, String password, String username, String status, String usertype) {
 		super();
-		this.userid = userid;
+		this.emailid = emailid;
+		this.password = password;
 		this.username = username;
 		this.status = status;
 		this.usertype = usertype;
+	}
+	public String getEmailid() {
+		return emailid;
+	}
+	public void setEmailid(String emailid) {
 		this.emailid = emailid;
 	}
-
-
-
-	public void setUserid(int userid) {
-		this.userid = userid;
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getUsername() {
 		return username;
@@ -66,20 +61,11 @@ public class UserAccount {
 	public void setUsertype(String usertype) {
 		this.usertype = usertype;
 	}
-	public String getEmailid() {
-		return emailid;
-	}
-	public void setEmailid(String emailid) {
-		this.emailid = emailid;
-	}
-
 
 	@Override
 	public String toString() {
-		return "User [userid=" + userid + ", username=" + username + ", status=" + status + ", usertype=" + usertype
-				+ ", emailid=" + emailid + "]";
+		return "UserAccount [emailid=" + emailid + ", password=" + password + ", username=" + username + ", status="
+				+ status + ", usertype=" + usertype + "]";
 	}
-	
-	
 
 }

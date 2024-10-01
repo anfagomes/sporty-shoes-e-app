@@ -13,17 +13,14 @@
 	<h2>Welcome to Sporty Shoes</h2>
 	</div>
  
-	<form action="#">
+	<form action="#" th:action="@{signIn}" method="post" th:object="${useraccount}">
 		<label>Email</label>
-		<input type="email"><br/>
+		<input type="email" th:field="*{emailid}"><br/>
 		<label>Password</label>
-		<input type="password"><br/>
-		<input type="submit" text=""/>
-		<input type="reset"/>
-		<p> <a>Change Password</a></p>
+		<input type="password" th:field="*{password}"><br/>
+		<button type="submit" value= "signIn" class="btn btn-primary btn-sm mb-3">Login</button>
+		<button type="rest" class="btn btn-primary btn-sm mb-3">Reset</button>
 		<p> <a>Create new user</a></p>
-		
-		<button type="submit" value= "SignIn">Login</button>
 	</form>
 	
 	<!-- 	<form action="#" th:action="@{signIn}" method="post" th:object="${login}"> -->
