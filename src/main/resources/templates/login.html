@@ -13,25 +13,15 @@
 	<h2>Welcome to Sporty Shoes</h2>
 	</div>
  
-	<form action="#" th:action="@{signIn}" method="post" th:object="${useraccount}">
-		<label>Email</label>
+	<form action="#" th:action="@{/signIn}" method="POST" th:object="${userAccount}" >
+ 		<label>Email</label>
 		<input type="email" th:field="*{emailid}"><br/>
 		<label>Password</label>
 		<input type="password" th:field="*{password}"><br/>
-		<button type="submit" value= "signIn" class="btn btn-primary btn-sm mb-3">Login</button>
+		<button type="submit" value="SignIn" class="btn btn-primary btn-sm mb-3">Login</button>
 		<button type="rest" class="btn btn-primary btn-sm mb-3">Reset</button>
-		<p> <a>Create new user</a></p>
+		<hr><a th:href="@{/userRegister}">New User Account</a>
 	</form>
-	
-	<!-- 	<form action="#" th:action="@{signIn}" method="post" th:object="${login}"> -->
-<!-- 	<label>EmailId</label> -->
-<!-- 	<input type="email" th:field="*{emailid}"><br/> -->
-<!-- 	 <label>Password</label> -->
-<!-- 	<input type="password" th:field="*{password}"><br/> -->
-<!-- 	<input type="submit" value="SignIn"/> -->
-<!-- 	<input type="reset" value="reset"/> -->
-<!-- 	</form> -->
-	
 	
 	<footer><p>© Sporty Shoes Company. All Rights Reserved.</p></footer>
 

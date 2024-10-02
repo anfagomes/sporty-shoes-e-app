@@ -9,25 +9,47 @@ import com.repository.UserAccountRepository;
 @Service
 public class UserAccountService {
 	
+	static final String ACTIVE="Active";
+	static final String USER="User";
+	
+	
 	@Autowired
 	UserAccountRepository userAccountRepository;
 	
 	public String signIn(UserAccount userAccount) {
 		if(userAccountRepository.findUserAccountByEmailId(userAccount.getEmailid().toString()) == null ||
-				(userAccountRepository.findUserAccountByEmailId(userAccount.getStatus().toString()).getStatus().contentEquals("Active"))) {
-			return "login fail";
+				(!userAccountRepository.findUserAccountByEmailId(userAccount.getEmailid().toString()).getStatus().contentEquals("Active"))) {
+			return "failure";
 		} else {
 			if(userAccountRepository.findUserAccountByEmailId(userAccount.getEmailid().toString()).getPassword().contentEquals(userAccount.getPassword().toString())) {
-				if(userAccountRepository.findUserAccountByEmailId(userAccount.getUsertype().toString()).getUsertype().contentEquals("Admin")) {
+				if(userAccountRepository.findUserAccountByEmailId(userAccount.getEmailid().toString()).getUsertype().contentEquals("Admin")) {
 					return "admin";
 				} else {
 					return "user";
 				}
 			
 			} else {
-				return "login fail";
+				return "failure";
 			}
 		}
 	}
+	
+	public String signUp(UserAccount userAccount) {
+		if(userAccountRepository.findUserAccountByEmailId(userAccount.getEmailid().toString()) != null) {
+			return "Failure";
+		} else {
+			UserAccount newUserAccount = new UserAccount();
+			
+			newUserAccount.setEmailid(userAccount.getEmailid());
+			newUserAccount.setPassword(userAccount.getPassword());
+			newUserAccount.setUsername(userAccount.getUsername());
+			newUserAccount.setStatus(ACTIVE);
+			newUserAccount.setUsertype(USER);
+			userAccountRepository.save(newUserAccount);
+			return "Success";
+		}
+	}
+	
+	
 
 }
