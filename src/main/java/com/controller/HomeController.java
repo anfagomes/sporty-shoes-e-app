@@ -1,5 +1,7 @@
 package com.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.entity.Product;
 import com.entity.UserAccount;
@@ -28,10 +31,10 @@ public class HomeController {
 							// template folder 
 	}
 	
-	@GetMapping("/adminDasboard")
+	@GetMapping("/adminDashboard")
 	public String adminDashboard() {
 		System.out.println("Admin dashboard");
-		return "adminDasboard";		// using view resolver it check page inside 
+		return "adminDashboard";		// using view resolver it check page inside 
 							// template folder 
 	}
 	
@@ -84,5 +87,45 @@ public class HomeController {
 		}
 	}
 	
+	@GetMapping("/userManagement")
+	public String userManagement(Model model) { 
+		System.out.println("User Management");
+		List<UserAccount> getUserAccounts = userAccountService.findAllUsers();
+		model.addAttribute("userAccounts", getUserAccounts);
+		return "userManagement";
+	}
+
+	
+	@GetMapping("/userManagement/delete")
+	public String delete(@RequestParam("emailid") String emailid, Model model) { 
+		userAccountService.deleteById(emailid);  
+		return "redirect:/userManagement";
+	}
+	
+	@GetMapping("/userManagement/changeUserStatus")
+	public String changeUserStatus(@ModelAttribute("userAccount") UserAccount userAccount, Model model) {
+		UserAccount user = userAccountService.getUserByEmailId(userAccount.getEmailid()); 
+		if(user != null) { 
+			userAccountService.changeUserStatus(user);  
+			return "redirect:/userManagement";
+		}
+		else {  
+			return "invalid";
+		}
+	}
+	
+	@GetMapping("/changePassword")
+	public String changePassowrd(@ModelAttribute("userAccount") UserAccount userAccount, Model model) {
+		UserAccount user = userAccountService.getUserByEmailId(userAccount.getEmailid()); 
+		
+		userAccountService.changeUserPassword(user);  
+		
+		if(user.getUsertype().equals("User")) { 
+			return "redirect:/userDashboard";
+		}
+		else {  
+			return "redirect:/adminDashboard";
+		}
+	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,7 +55,7 @@ public class ProductContoller {
 		model.addAttribute("product",product); 
 		  
 		return "productform";
-	  }
+	 }
 	  
 	@GetMapping("/products/delete")
 	public String delete(@RequestParam("productId") int productId, Model model) { 
@@ -65,13 +66,25 @@ public class ProductContoller {
 	
 	
 	// Save product in database
-	
-	//@RequestMapping(value = "save",method = RequestMethod.POST)
-	@GetMapping("/products/save")
+
+	@PostMapping("/products/save")
 	public String saveProduct(@ModelAttribute("product") Product product) {
 		productService.save(product);
 		// redirect to avoid duplicates
 		return "redirect:/products";
+		
+	}
+	
+	
+	
+	@GetMapping("/catalog")
+	public String showCatalog(Model model) {
+		//get products from db
+		List<Product> getProducts = productService.findAll();
+		System.out.println("Product: "+ getProducts);
+		//add to the spring model
+		model.addAttribute("products",getProducts);
+		return "catalog";
 		
 	}
 	
