@@ -77,16 +77,12 @@ public class ProductContoller {
 	
 	
 	
-	@GetMapping("/catalog")
-	public String showCatalog(Model model) {
-		//get products from db
-		List<Product> getProducts = productService.findAll();
-		System.out.println("Product: "+ getProducts);
-		//add to the spring model
-		model.addAttribute("products",getProducts);
-		return "catalog";
-		
-	}
+	/*
+	 * @GetMapping("/catalog") public String showCatalog(Model model) { //get
+	 * products from db List<Product> getProducts = productService.findAll();
+	 * System.out.println("Product: "+ getProducts); //add to the spring model
+	 * model.addAttribute("products",getProducts); return "catalog"; }
+	 */
 	
 	
 	

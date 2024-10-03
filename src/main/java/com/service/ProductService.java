@@ -47,6 +47,7 @@ public class ProductService {
     public List<Product> findAllByBrand(String brand) {
     	return productRepository.findAllByBrand(brand);
     }
+   
 	
 
 }

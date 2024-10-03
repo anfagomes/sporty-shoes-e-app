@@ -1,17 +1,12 @@
 package com.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 
@@ -37,9 +32,13 @@ public class Product {
 	@Min(value = 1,message = "Price value must be > 1")
 	private float price;
 	
-	@OneToMany
-	@JoinColumn(name = "productid")					// make productId as FK in orders table. 
-	private List<Orders> orders;
+	/*
+	 * @ManyToMany (fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
+	 * CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	 * 
+	 * @JoinTable(name= "productorder", joinColumns=@JoinColumn(name="productid"),
+	 * inverseJoinColumns=@JoinColumn(name="orderid")) private List<Orders> orders;
+	 */
 
 	public int getProductid() {
 		return productid;
@@ -97,19 +96,17 @@ public class Product {
 		this.price = price;
 	}
 
-	public List<Orders> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Orders> orders) {
-		this.orders = orders;
-	}
+	/*
+	 * public List<Orders> getOrders() { return orders; }
+	 * 
+	 * public void setOrders(List<Orders> orders) { this.orders = orders; }
+	 */
 
 	public Product() {
 		super();
 	}
 
-	public Product(int productid, String name, String brand, String size, String type, int quantity, float price, List<Orders> orders) {
+	public Product(int productid, String name, String brand, String size, String type, int quantity, float price) {
 		super();
 		this.productid = productid;
 		this.name = name;
@@ -118,13 +115,13 @@ public class Product {
 		this.type = type;
 		this.quantity = quantity;
 		this.price = price;
-		this.orders = orders;
+		/* this.orders = orders; */
 	}
 
 	@Override
 	public String toString() {
 		return "Product [productid=" + productid + ", name=" + name + ", brand=" + brand + ", size=" + size + ", type="
-				+ type + ", quantity=" + quantity + ", price=" + price + ", orders=" + orders + "]";
+				+ type + ", quantity=" + quantity + ", price=" + price + "]";
 	}
 	
 	

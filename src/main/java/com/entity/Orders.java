@@ -1,13 +1,17 @@
 package com.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -20,26 +24,58 @@ public class Orders {
 	private int orderid;
 	private LocalDateTime orderdatatime;
 	private int quantity;
-	/*
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "emailid", nullable = false) private String emailid;
-	 */
-	private Integer productid;				// FK 	Integer can hold null value
+	private float totalAmount;
 	
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinColumn(name = "emailid", nullable = false)
+	private UserAccount userAccount;
+	
+	
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems = new ArrayList<>();
+   
 	public Orders() {
 		super();
 	}
 
-	public Orders(int orderid, LocalDateTime orderdatatime, int quantity, //String emailid, 
-			Integer productid) {
+
+
+	public Orders(int orderid, LocalDateTime orderdatatime, int quantity, float totalAmount, UserAccount userAccount,
+			List<OrderItem> orderItems) {
 		super();
 		this.orderid = orderid;
 		this.orderdatatime = orderdatatime;
 		this.quantity = quantity;
-		//this.emailid = emailid;
-		this.productid = productid;
+		this.totalAmount = totalAmount;
+		this.userAccount = userAccount;
+		this.orderItems = orderItems;
 	}
+
+
+
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+
+
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
+
+
+
+	public List<OrderItem> getOrderItem() {
+		return orderItems;
+	}
+
+
+
+	public void setOrderItem(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+
+
 
 	public int getOrderid() {
 		return orderid;
@@ -65,28 +101,23 @@ public class Orders {
 		this.quantity = quantity;
 	}
 
-	/*
-	 * public String getEmailid() { return emailid; }
-	 * 
-	 * public void setEmailid(String emailid) { this.emailid = emailid; }
-	 */
-
-	public Integer getProductid() {
-		return productid;
+	public float getTotalAmount() {
+		return totalAmount;
 	}
 
-	public void setProductid(Integer productid) {
-		this.productid = productid;
+	public void setTotalAmount(float totalAmount) {
+		this.totalAmount = totalAmount;
 	}
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
 
+
+	public void addOrderItem(OrderItem productItem) {
+		orderItems.add(productItem);
+	}
+
+
+
+	public void removeOrderItem(int orderItemid) {
+		orderItems.remove(orderItemid);
+	}
 }

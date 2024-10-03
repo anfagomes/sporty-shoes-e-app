@@ -12,7 +12,9 @@ import com.entity.Orders;
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Integer>{
 	
-	@Query("select o from Orders o where o.productid = :productid")
-	public List<Orders> findOrderByProcuctId(@Param("productid") int productid);
+	/*
+	 * @Query("select o from Orders o where o.productid = :productid") public
+	 * List<Orders> findOrderByProcuctId(@Param("productid") int productid);
+	 */
 
 }
