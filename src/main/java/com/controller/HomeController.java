@@ -16,6 +16,8 @@ import com.entity.Product;
 import com.entity.UserAccount;
 import com.service.UserAccountService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
 	
@@ -32,14 +34,15 @@ public class HomeController {
 	}
 	
 	@GetMapping("/adminDashboard")
-	public String adminDashboard() {
+	public String adminDashboard(Model mm) {
 		System.out.println("Admin dashboard");
 		return "adminDashboard";		// using view resolver it check page inside 
 							// template folder 
 	}
 	
 	@GetMapping("/userDashboard")
-	public String userDashboard() {
+	public String userDashboard(Model mm, @ModelAttribute("userAccount") UserAccount userAccount) {
+		mm.addAttribute("userAccount", userAccount);
 		System.out.println("User dashboard");
 		return "userDashboard";		// using view resolver it check page inside 
 							// template folder 
@@ -50,16 +53,20 @@ public class HomeController {
 		String result = userAccountService.signIn(userAccount);
 		System.out.println("sign result:" +result);
 		if(result.equals("user")) {
-			//session.setAttribute("loggedInUser", ll);
 			return "redirect:/userDashboard";
 		}else {
 			if(result.equals("admin")) {
-				//session.setAttribute("loggedInUser", ll);
 				return "redirect:/adminDashboard";
 			}else {
 				return "redirect:/?error";
 			}
 		}
+	}
+	
+	@GetMapping("/logout")
+	public String logout(){ 
+		System.out.println("Logout");
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/userRegister",method = RequestMethod.GET)
@@ -94,7 +101,16 @@ public class HomeController {
 		model.addAttribute("userAccounts", getUserAccounts);
 		return "userManagement";
 	}
-
+	
+	
+	@PostMapping("/userManagement/filterByEmailId")
+	public String filterByEmailId(Model model, @RequestParam("emailid") String emailid) { 
+		System.out.println("User Management");
+		UserAccount getUserAccount = userAccountService.findUserByEmailId(emailid);
+		model.addAttribute("userAccounts", getUserAccount);
+		return "userManagement";
+	}
+	
 	
 	@GetMapping("/userManagement/delete")
 	public String delete(@RequestParam("emailid") String emailid, Model model) { 
@@ -116,6 +132,7 @@ public class HomeController {
 	
 	@GetMapping("/changePassword")
 	public String changePassowrd(@ModelAttribute("userAccount") UserAccount userAccount, Model model) {
+		System.out.println(userAccount.getEmailid());
 		UserAccount user = userAccountService.getUserByEmailId(userAccount.getEmailid()); 
 		
 		userAccountService.changeUserPassword(user);  

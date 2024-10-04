@@ -17,5 +17,5 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
 	
 	@Query("select u from UserAccount u where u.usertype = 'User'")
 	public List<UserAccount> findAllUsersWithUsertypeUser();
-	
+
 }

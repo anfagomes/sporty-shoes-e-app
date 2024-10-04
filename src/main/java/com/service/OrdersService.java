@@ -1,5 +1,6 @@
 package com.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class OrdersService {
 	
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+	UserAccountService userAccountService;
+	
 
     
 	public List<Orders> findAllOrders() {
@@ -31,13 +36,20 @@ public class OrdersService {
 	}
 	
 	public void orderCheckout(Orders order) {
-		
+		System.out.println(order);
+		order.setUserAccount(userAccountService.getUserByEmailId("user@gmail.com"));
+		order.setOrderdatatime(LocalDateTime.now());
+		System.out.println("After:   "+order);
 		ordersRepository.save(order);
 	}
 
 	public void removeFromCart(int orderItemid, Orders orderToSubmit) {
 		orderToSubmit.removeOrderItem(orderItemid);
 		
+	}
+
+	public List<Orders> findAllOrdersByEmaildId(String emailid) {
+		return ordersRepository.findAllOrdersByEmailId(emailid);
 	}
 
 }

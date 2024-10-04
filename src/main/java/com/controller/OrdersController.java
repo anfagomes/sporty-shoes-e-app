@@ -41,6 +41,16 @@ public class OrdersController {
 		return "orders";
 	}
 	
+	@GetMapping("/userOrders")
+	public String findAllOrdersByEmaildId(Model model, @ModelAttribute("userAccount") UserAccount userAccount) {
+		//get products from db
+		List<Orders> getOrders = ordersService.findAllOrdersByEmaildId(userAccount.getEmailid());
+		System.out.println("Product: "+ getOrders);
+		//add to the spring model
+		model.addAttribute("products",getOrders);
+		return "orders";
+	}
+	
 	@GetMapping("/catalog/addProductToOrder")
 	public String addProductToOrder(@RequestParam("productId") int productId, Model model) {
 		
@@ -58,7 +68,6 @@ public class OrdersController {
 	
 	@PostMapping("/catalog/checkout")
 	public String orderCheckout() {
-		orderToSubmit.setUserAccount(userAccountService.getUserByEmailId("salomao@gmail.com"));
 		ordersService.orderCheckout(orderToSubmit);
 		orderToSubmit = new Orders();
 		return "redirect:/catalog";
@@ -80,7 +89,7 @@ public class OrdersController {
 	@GetMapping("/catalog/removeFromCart")
 	public String delete(@RequestParam("orderItemid") int orderItemid, Model model) { 
 		ordersService.removeFromCart(orderItemid,orderToSubmit);
-		return "redirect:/products";
+		return "redirect:/catalog";
 	}
 	
 	

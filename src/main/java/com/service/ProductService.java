@@ -44,10 +44,9 @@ public class ProductService {
     	productRepository.deleteById(productId);
     }
     
-    public List<Product> findAllByBrand(String brand) {
-    	return productRepository.findAllByBrand(brand);
-    }
-   
+    public List<Product> findProductByType(String brand) {
+    	return productRepository.findAllProductsByType(brand);
+    }   
 	
 
 }

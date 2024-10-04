@@ -97,6 +97,10 @@ public class UserAccountService {
 		}
 	}
 
+	public UserAccount findUserByEmailId(String emailid) {
+        return userAccountRepository.findUserAccountByEmailId(emailid);
+	}
+
 
 	
 	

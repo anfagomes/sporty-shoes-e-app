@@ -36,6 +36,17 @@ public class ProductContoller {
 		
 	}
 	
+	@PostMapping("/products/filterByType")
+	public String filterByType(Model model, @RequestParam("type") String type) {
+		//get products from db
+		List<Product> getProducts = productService.findProductByType(type);
+		System.out.println("Product: "+ getProducts);
+		//add to the spring model
+		model.addAttribute("products",getProducts);
+		return "products";
+		
+	}
+	
 	// Add new product form
 	//@RequestMapping(value = "productFormAdd",method = RequestMethod.GET)
 	@GetMapping("/products/productFormAdd")
@@ -75,16 +86,7 @@ public class ProductContoller {
 		
 	}
 	
-	
-	
-	/*
-	 * @GetMapping("/catalog") public String showCatalog(Model model) { //get
-	 * products from db List<Product> getProducts = productService.findAll();
-	 * System.out.println("Product: "+ getProducts); //add to the spring model
-	 * model.addAttribute("products",getProducts); return "catalog"; }
-	 */
-	
-	
+
 	
 	
 

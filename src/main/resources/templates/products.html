@@ -15,6 +15,17 @@
 <hr>
 <a th:href="@{/products/productFormAdd}" class="btn btn-primary btn-sm mb-3">Add Product</a>
 
+<form action="#" th:action="@{/products/filterByType}" method="POST">
+  <div class="form-group">
+    <input type="text" id="type" name="type" class="form-control mb-4 w-25" placeholder="Type">
+  </div>
+  <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+<br>
+<form action="#" th:action="@{/products}" method="GET">
+  <button type="submit" th:action="@{/products}" class="btn btn-primary">All</button>
+</form>
+
 <table class="table table-bordered table-striped">
 	<thead class="table-dark">
 		<tr>
