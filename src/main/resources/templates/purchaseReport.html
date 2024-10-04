@@ -23,7 +23,8 @@
 <br>
 <form action="#" th:action="@{/purchaseReport/filterByDate}" method="POST">
   <div class="form-group">
-    <input type="text" id="createdate" name="createdate" class="form-control mb-4 w-25" placeholder="Created Date">
+    <input type="date" id="startDate" name="startDate" class="form-control mb-4 w-25" placeholder="Start Date">
+    <input type="date" id="endDate" name="endDate" class="form-control mb-4 w-25" placeholder="End Date">
   </div>
   <button type="submit" class="btn btn-primary">Filter</button>
 </form>

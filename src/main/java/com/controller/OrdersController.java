@@ -1,5 +1,8 @@
 package com.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +62,13 @@ public class OrdersController {
 	}
 
 	
-	@GetMapping("/purchaseReport/filterByDate")
-	public String findOrdersByDate(Model model, @ModelAttribute("userAccount") UserAccount userAccount) {
+	@PostMapping("/purchaseReport/filterByDate")
+	public String findOrdersByDate(Model model, @RequestParam String startDate, @RequestParam String endDate) {
+        LocalDateTime start = LocalDate.parse(startDate).atStartOfDay();
+        LocalDateTime end = LocalDate.parse(endDate).atTime(LocalTime.MAX);
+        
 		//get products from db
-		List<Orders> getOrders = ordersService.findAllOrdersByEmaildId(userAccount.getEmailid());
+		List<Orders> getOrders = ordersService.getOrdersWithinDateRange(start,end);
 		System.out.println("Orders: "+ getOrders);
 		//add to the spring model
 		model.addAttribute("orders",getOrders);
@@ -89,7 +95,6 @@ public class OrdersController {
 		if(productToAdd != null) { 
 			ordersService.addProductToOrder(orderToSubmit, productToAdd,1);
 			System.out.println("Order to submit:" +orderToSubmit.getOrderItem());
-			//model.addAttribute("orderToSubmit",orderToSubmit.getOrderItem());
 			return "redirect:/catalog";
 		} else {  
 			return "Product not found";

@@ -49,8 +49,12 @@ public class OrdersService {
 		
 	}
 
-	public List<Orders> findAllOrdersByEmaildId(String emailid) {
-		return ordersRepository.findAllOrdersByEmailId(emailid);
+	public List<Orders> findAllOrdersByEmaildId(String emailId) {
+		return ordersRepository.findAllOrdersByEmailId(emailId);
 	}
+	
+    public List<Orders> getOrdersWithinDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        return ordersRepository.findOrdersWithinDateRange(startDate, endDate);
+    }
 
 }
