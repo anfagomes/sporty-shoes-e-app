@@ -17,6 +17,8 @@ import com.service.OrdersService;
 import com.service.ProductService;
 import com.service.UserAccountService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class OrdersController {
 
@@ -31,25 +33,53 @@ public class OrdersController {
 	
 	private Orders orderToSubmit = new Orders();
 	
-	@GetMapping("/orders")
+	@GetMapping("/purchaseReport")
 	public String findAllOrders(Model model) {
 		//get products from db
 		List<Orders> getOrders = ordersService.findAllOrders();
-		System.out.println("Product: "+ getOrders);
+		System.out.println("Orders: "+ getOrders);
 		//add to the spring model
-		model.addAttribute("products",getOrders);
-		return "orders";
+		model.addAttribute("orders",getOrders);
+		return "purchaseReport";
 	}
 	
-	@GetMapping("/userOrders")
-	public String findAllOrdersByEmaildId(Model model, @ModelAttribute("userAccount") UserAccount userAccount) {
-		//get products from db
-		List<Orders> getOrders = ordersService.findAllOrdersByEmaildId(userAccount.getEmailid());
-		System.out.println("Product: "+ getOrders);
+	@GetMapping("/myorders")
+	public String findAllOrdersByEmaildId(Model model, HttpSession session) {
+		
+		UserAccount loginUserAccount = (UserAccount) session.getAttribute("loginuser");
+		System.out.println("Myorders Login:"+loginUserAccount.getEmailid());
+		model.addAttribute("loginuser", loginUserAccount);
+		
+		
+		List<Orders> getOrders = ordersService.findAllOrdersByEmaildId(loginUserAccount.getEmailid());
+		System.out.println("getOrders: "+ getOrders);
 		//add to the spring model
-		model.addAttribute("products",getOrders);
+		model.addAttribute("orders",getOrders);
 		return "orders";
 	}
+
+	
+	@GetMapping("/purchaseReport/filterByDate")
+	public String findOrdersByDate(Model model, @ModelAttribute("userAccount") UserAccount userAccount) {
+		//get products from db
+		List<Orders> getOrders = ordersService.findAllOrdersByEmaildId(userAccount.getEmailid());
+		System.out.println("Orders: "+ getOrders);
+		//add to the spring model
+		model.addAttribute("orders",getOrders);
+		return "purchaseReport";
+	}
+	
+	@PostMapping("/purchaseReport/filterByEmailid")
+	public String findOrdersByProductType(Model model, @ModelAttribute("emailid") String emailid) {
+		//get products from db
+		List<Orders> getOrders = ordersService.findAllOrdersByEmaildId(emailid);
+		System.out.println("Orders: "+ getOrders);
+		//add to the spring model
+		model.addAttribute("orders",getOrders);
+		return "purchaseReport";
+	}
+	
+	
 	
 	@GetMapping("/catalog/addProductToOrder")
 	public String addProductToOrder(@RequestParam("productId") int productId, Model model) {
@@ -67,8 +97,14 @@ public class OrdersController {
 	}
 	
 	@PostMapping("/catalog/checkout")
-	public String orderCheckout() {
-		ordersService.orderCheckout(orderToSubmit);
+	public String orderCheckout(HttpSession session, Model model) {
+		
+		UserAccount loginUserAccount = (UserAccount) session.getAttribute("loginuser");
+		System.out.println("Myorders Login:"+loginUserAccount.getEmailid());
+		model.addAttribute("loginuser", loginUserAccount);
+		
+		
+		ordersService.orderCheckout(orderToSubmit, loginUserAccount);
 		orderToSubmit = new Orders();
 		return "redirect:/catalog";
 		
@@ -87,7 +123,7 @@ public class OrdersController {
 	}
 	
 	@GetMapping("/catalog/removeFromCart")
-	public String delete(@RequestParam("orderItemid") int orderItemid, Model model) { 
+	public String delete(@RequestParam("item") int orderItemid, Model model) { 
 		ordersService.removeFromCart(orderItemid,orderToSubmit);
 		return "redirect:/catalog";
 	}

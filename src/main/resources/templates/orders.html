@@ -11,7 +11,7 @@
 
 <h2>Sporty Shoes</h2>
 <br>
-<h3>Order Management</h3>
+<h3>My orders</h3>
 <hr>
 
 <table class="table table-bordered table-striped">
@@ -20,28 +20,21 @@
 			<th>Order Id</th>
 			<th>Created Date</th>
 			<th>Quantity</th>
-			<th>ProductId</th>
-			<th>User</th>
-			<th>Status</th>
-			<th>Actions</th>
+			<th>Total Amount €</th>
 		</tr>
 	</thead>
 	
 	<tbody>
 		<tr th:each="order : ${orders}">
-			<td th:text="${order.orderId}" />
+			<td th:text="${order.orderid}" />
 			<td th:text="${order.orderdatatime}" />
 			<td th:text="${order.quantity}" />
-			<td th:text="${order.productid}" />
-			<td>
-			<!-- 	<a th:href="@{/products/productFormUpdate(productId=${product.productid})}" class="btn btn-info btn-sm">Update</a>
-				<a th:href="@{/products/delete(productId=${product.productid})}" class="btn btn-danger btn-sm">Delete</a> -->
-			</td>
+			<td th:text="${order.totalAmount}" />
 		</tr>		
 	</tbody>
 
 </table>
-<hr><a th:href="@{/adminDashboard}">Back to Admin Dashboard</a>
+<hr><a th:href="@{/userDashboard}">Back to User Dashboard</a>
 </div>
 </body>
 </html>

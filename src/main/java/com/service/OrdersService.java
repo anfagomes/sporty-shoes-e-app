@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.entity.OrderItem;
 import com.entity.Orders;
 import com.entity.Product;
+import com.entity.UserAccount;
 import com.repository.OrdersRepository;
 import com.repository.ProductRepository;
 
@@ -35,9 +36,9 @@ public class OrdersService {
 		order.addOrderItem(productItem);
 	}
 	
-	public void orderCheckout(Orders order) {
-		System.out.println(order);
-		order.setUserAccount(userAccountService.getUserByEmailId("user@gmail.com"));
+	public void orderCheckout(Orders order, UserAccount userAccount) {
+		System.out.println("Checkout Order: " +userAccount.getEmailid());
+		order.setUserAccount(userAccountService.getUserByEmailId(userAccount.getEmailid()));
 		order.setOrderdatatime(LocalDateTime.now());
 		System.out.println("After:   "+order);
 		ordersRepository.save(order);

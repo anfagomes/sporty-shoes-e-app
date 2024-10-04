@@ -113,11 +113,16 @@ public class Orders {
 
 	public void addOrderItem(OrderItem productItem) {
 		orderItems.add(productItem);
+		totalAmount+= productItem.getProduct().getPrice();
+		quantity+=1;
 	}
 
 
 
 	public void removeOrderItem(int orderItemid) {
+		totalAmount-=orderItems.get(orderItemid).getProduct().getPrice();
+		quantity-=1;
 		orderItems.remove(orderItemid);
+		
 	}
 }

@@ -73,7 +73,7 @@ public class UserAccountService {
 		
 	}
 	
-	public void changeUserStatus(UserAccount userAccount) {	
+	public void changeUserPassword(UserAccount userAccount) {	
 		userAccountRepository.save(userAccount);
 	}
 	
@@ -85,7 +85,7 @@ public class UserAccountService {
         return userAccountRepository.findAllUsersWithUsertypeUser();
     }
 	
-	public void changeUserPassword(UserAccount userAccount) {	
+	public void changeUserStatus(UserAccount userAccount) {	
 		if(userAccountRepository.findUserAccountByEmailId(userAccount.getEmailid().toString()).getStatus().equals(ACTIVE)) {
 			userAccount.setStatus(BLOCKED);
 			System.out.println("UserAccountService Blockec " +userAccount);

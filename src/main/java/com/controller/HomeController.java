@@ -34,28 +34,39 @@ public class HomeController {
 	}
 	
 	@GetMapping("/adminDashboard")
-	public String adminDashboard(Model mm) {
+	public String adminDashboard(Model mm, HttpSession session) {
+		UserAccount loginUserAccount = (UserAccount) session.getAttribute("loginuser");
+		System.out.println("UserAccount Login:"+loginUserAccount.getEmailid());
+		mm.addAttribute("loginuser", loginUserAccount);
+		
 		System.out.println("Admin dashboard");
 		return "adminDashboard";		// using view resolver it check page inside 
 							// template folder 
 	}
 	
 	@GetMapping("/userDashboard")
-	public String userDashboard(Model mm, @ModelAttribute("userAccount") UserAccount userAccount) {
-		mm.addAttribute("userAccount", userAccount);
+	public String userDashboard(Model mm,HttpSession session) {
+		
+		UserAccount loginUserAccount = (UserAccount) session.getAttribute("loginuser");
+		System.out.println("UserAccount Login:"+loginUserAccount.getEmailid());
+		mm.addAttribute("loginuser", loginUserAccount);
+		
 		System.out.println("User dashboard");
 		return "userDashboard";		// using view resolver it check page inside 
 							// template folder 
 	}
 	
 	@PostMapping("/signIn")
-	public String signIn(@ModelAttribute("userAccount") UserAccount userAccount, Model mm){ 
+	public String signIn(@ModelAttribute("userAccount") UserAccount userAccount, Model mm, HttpSession session){ 
 		String result = userAccountService.signIn(userAccount);
 		System.out.println("sign result:" +result);
+		mm.addAttribute("userAccount", userAccount);
 		if(result.equals("user")) {
+			session.setAttribute("loginuser", userAccount);
 			return "redirect:/userDashboard";
 		}else {
 			if(result.equals("admin")) {
+				session.setAttribute("loginuser", userAccount);
 				return "redirect:/adminDashboard";
 			}else {
 				return "redirect:/?error";
@@ -64,9 +75,10 @@ public class HomeController {
 	}
 	
 	@GetMapping("/logout")
-	public String logout(){ 
+	public String logout(HttpSession session){ 
 		System.out.println("Logout");
-		return "redirect:/";
+		session.invalidate();
+	    return "redirect:/";  //Where you go after logout here.
 	}
 	
 	@RequestMapping(value = "/userRegister",method = RequestMethod.GET)
@@ -120,7 +132,9 @@ public class HomeController {
 	
 	@GetMapping("/userManagement/changeUserStatus")
 	public String changeUserStatus(@ModelAttribute("userAccount") UserAccount userAccount, Model model) {
-		UserAccount user = userAccountService.getUserByEmailId(userAccount.getEmailid()); 
+
+		UserAccount user = userAccountService.getUserByEmailId(userAccount.getEmailid());
+		System.out.println(user);
 		if(user != null) { 
 			userAccountService.changeUserStatus(user);  
 			return "redirect:/userManagement";
@@ -130,11 +144,18 @@ public class HomeController {
 		}
 	}
 	
-	@GetMapping("/changePassword")
-	public String changePassowrd(@ModelAttribute("userAccount") UserAccount userAccount, Model model) {
-		System.out.println(userAccount.getEmailid());
+	@GetMapping("/changePasswordForm")
+	public String changePasswordForm(Model model, HttpSession session) { 
+		UserAccount loginUserAccount = (UserAccount) session.getAttribute("loginuser");
+		System.out.println("UserAccount Login:"+loginUserAccount.getEmailid());
+		model.addAttribute("userAccount", loginUserAccount);
+		return "changePasswordForm";
+	}
+	
+	@PostMapping("/changePassword")
+	public String changePassword(@ModelAttribute("userAccount") UserAccount userAccount, Model model) {
 		UserAccount user = userAccountService.getUserByEmailId(userAccount.getEmailid()); 
-		
+		user.setPassword(userAccount.getPassword());
 		userAccountService.changeUserPassword(user);  
 		
 		if(user.getUsertype().equals("User")) { 
