@@ -31,12 +31,19 @@ public class SportyShoesEAppApplication {
 	@PostConstruct
 	public void init() {
 
-		UserAccount userAccount = new UserAccount("admin@gmail.com", "admin123", "admin", "Active", "Admin");
-		Optional<UserAccount> result = Optional.ofNullable(userAccountRepository.findUserAccountByEmailId(userAccount.getEmailid()));
+		UserAccount userAccount1 = new UserAccount("admin@gmail.com", "admin123", "admin", "Active", "Admin");
+		UserAccount userAccount2 = new UserAccount("user@gmail.com", "123", "user", "Active", "User");
+		Optional<UserAccount> result1 = Optional.ofNullable(userAccountRepository.findUserAccountByEmailId(userAccount1.getEmailid()));
+		Optional<UserAccount> result2 = Optional.ofNullable(userAccountRepository.findUserAccountByEmailId(userAccount2.getEmailid()));
 
-		if(!result.isPresent()) {
+		if(!result1.isPresent()) {
 			System.out.println("Creating Admin account");
-			userAccountRepository.save(userAccount);
+			userAccountRepository.save(userAccount1);
+		}
+		
+		if(!result2.isPresent()) {
+			System.out.println("Creating User account");
+			userAccountRepository.save(userAccount2);
 		}
 	}
 
